@@ -1,4 +1,4 @@
-package repositoy
+package repository
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type dbCore struct {
 	Db *gorm.DB
 }
 
-type daatbaseSet struct {
+type databaseSet struct {
 	ReadDB  dbCore
 	WriteDB dbCore
 }

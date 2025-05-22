@@ -3,7 +3,10 @@ package util
 import (
 	"math/rand"
 	cmn "ng_autocode_back_service/common/model"
+	"os"
+	"path/filepath"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -58,6 +61,49 @@ func DaySeconds(t time.Time) int {
 	return t.Hour()*3600 + t.Minute()*60 + t.Second()
 }
 
+func WriteToFile(filePath, text string) error {
+	filePath = UpdatePathSeparator(filePath)
+	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	if len(text) > 0 {
+		_, err = f.WriteString(text)
+		if err != nil {
+			return err
+		}
+	}
+
+	return err
+}
+
+func CreateFolders(path string) error {
+	path = UpdatePathSeparator(path)
+	err := os.MkdirAll(path, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CraeteFileWithPath(sPath string) error {
+	dirPath := filepath.Dir(sPath)
+	sPath = UpdatePathSeparator(sPath)
+	err := CreateFolders(dirPath)
+	if err != nil {
+		return err
+	}
+
+	err = WriteToFile(sPath, "")
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 func GetCurrentMillis() int64 {
 	return time.Now().UnixNano() / 1e6
 }
@@ -70,4 +116,14 @@ func GetPathSeparator() rune {
 		return cmn.PATH_SEPARATOR_LINUX
 	}
 	return cmn.PATH_SEPARATOR_LINUX
+}
+
+func UpdatePathSeparator(path string) string {
+	sep := GetPathSeparator()
+	if sep == cmn.PATH_SEPARATOR_WINDOWS {
+		path = strings.ReplaceAll(path, string(cmn.PATH_SEPARATOR_LINUX), string(cmn.PATH_SEPARATOR_WINDOWS))
+	} else {
+		path = strings.ReplaceAll(path, string(cmn.PATH_SEPARATOR_WINDOWS), string(cmn.PATH_SEPARATOR_LINUX))
+	}
+	return path
 }

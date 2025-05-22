@@ -1,7 +1,7 @@
 vesrion: 1.0
 server:
   host: 0.0.0.0
-  port: 8086
+  port: 8096
 repo:
   databases:
     oracle:
@@ -25,5 +25,5 @@ repo:
     host: 0.0.0.0
     port: 6389
 log:
-  path: "auto_app.log"
+  path: "auto_app_prod.log"
   level: -1
