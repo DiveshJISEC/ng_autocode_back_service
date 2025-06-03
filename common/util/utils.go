@@ -61,6 +61,20 @@ func DaySeconds(t time.Time) int {
 	return t.Hour()*3600 + t.Minute()*60 + t.Second()
 }
 
+func ReadTextFile(filePath string) string {
+	filePath = UpdatePathSeparator(filePath)
+	file, err := os.Open(filePath)
+	if err != nil {
+		return "error reading file: " + err.Error()
+	}
+	defer file.Close()
+	content, err := os.ReadFile(filePath)
+	if err != nil {
+		return "error reading file: " + err.Error()
+	}
+	return string(content)
+}
+
 func WriteToFile(filePath, text string) error {
 	filePath = UpdatePathSeparator(filePath)
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)

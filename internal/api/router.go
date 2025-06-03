@@ -24,13 +24,18 @@ func SetupRoutes(moduleGrp moduleGrp.ModuleLayer, logger *zap.Logger, appType cm
 	} else {
 		gin.SetMode(gin.TestMode)
 	}
-
 	router := gin.New()
 
 	// Set up middleware
 	router.Use(customLogger(logger))
 	router.Use(gin.Recovery())
+	router.Use(cors())
 	router.GET("/health", moduleGrp.GetSystemMatrics)
+	//Sample
+	router.GET("/version", moduleGrp.GetAppVersion)
+	router.GET("/readfile", moduleGrp.GetReadTextData)
+	router.GET("/readjson", moduleGrp.GetReadJsonData)
+	//Sample
 
 	if appType == cmn.APP_FIXED_DEPOSIT {
 		fd := router.Group("/fd")
@@ -93,5 +98,22 @@ func customLogger(logger *zap.Logger) gin.HandlerFunc {
 				zap.Int64("latency", time.Since(start).Milliseconds()),
 			)
 		}
+	}
+}
+
+func cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type, X-CSRF-Token")
+		c.Writer.Header().Set("Access-Control-Expose-Headers", "Link")
+		c.Writer.Header().Set("Access-Control-Max-Age", "300")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
 	}
 }
