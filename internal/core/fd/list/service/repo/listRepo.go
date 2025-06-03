@@ -19,8 +19,16 @@ func (g *dbSt) GetFDAgentList(c context.Context) (dtoResponse []*dto.FDAgentList
 	var fdAgentList []m.FDAgent
 	query := g.oracle.WithContext(c).Table("fd_agent_master").
 		Select(
-			`fam_agnt_cd`,
-			`fam_desc`,
+			`agentCode`,
+			`agentCodeName`,
+			`agentFirstName`,
+			`agentLastName`,
+			`agentBranch`,
+			`agentCategory`,
+			`agentActive`,
+			`agentEmpType`,
+			`otherFlags`,
+			`dtUpdate`,
 		)
 
 	logger.Log(c).Debug("Executing query", zap.Any("query", query))
@@ -32,8 +40,16 @@ func (g *dbSt) GetFDAgentList(c context.Context) (dtoResponse []*dto.FDAgentList
 
 	for _, agent := range fdAgentList {
 		agents = append(agents, &dto.FDAgentListResponse{
-			Code: agent.Code,
-			Name: agent.Name,
+			AgentCode:      agent.AgentCode,
+			AgentCodeName:  agent.AgentCodeName,
+			AgentFirstName: agent.AgentFirstName,
+			AgentLastName:  agent.AgentLastName,
+			AgentBranch:    agent.AgentBranch,
+			AgentCategory:  agent.AgentCategory,
+			AgentActive:    agent.AgentActive,
+			AgentEmpType:   agent.AgentEmpType,
+			OtherFlags:     agent.OtherFlags,
+			DtUpdate:       agent.DtUpdate,
 		})
 	}
 

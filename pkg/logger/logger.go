@@ -31,7 +31,7 @@ func LoggerInit(logFilePath string, level zapcore.Level) {
 
 	cfg.Level = zap.NewAtomicLevelAt(level)
 	cfg.EncoderConfig.FunctionKey = "f"
-	cfg.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	cfg.EncoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	cfg.EncoderConfig.EncodeTime = sylogTimeEncoder
 	cfg.EncoderConfig.ConsoleSeparator = " "
 	cfg.EncoderConfig.EncodeCaller = MyCaller
@@ -60,6 +60,8 @@ func LoggerInit(logFilePath string, level zapcore.Level) {
 	} else {
 		// do nohing
 	}
+
+	Log().Info("Logger initialized successfully")
 }
 
 func GetZapLevel(level int) zapcore.Level {

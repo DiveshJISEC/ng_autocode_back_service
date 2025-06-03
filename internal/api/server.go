@@ -11,13 +11,11 @@ import (
 	"ng_autocode_back_service/pkg/logger"
 
 	"go.uber.org/zap"
-	"gorm.io/gorm"
 )
 
 var (
-	srv   *http.Server
-	ctx   context.Context
-	dbSet []*gorm.DB
+	srv *http.Server
+	ctx context.Context
 )
 
 func SetAPIServer(a_ctx *context.Context, modulesGrp moduleGrp.ModuleLayer, appType cmn.APP_TYPE, buildMode int8) {
@@ -26,11 +24,11 @@ func SetAPIServer(a_ctx *context.Context, modulesGrp moduleGrp.ModuleLayer, appT
 		Addr:    fmt.Sprintf(":%d", config.GetConfig().GetInt("server.port")),
 		Handler: SetupRoutes(modulesGrp, logger.Log(), appType, buildMode),
 	}
-	logger.Log().Info("Server starting on port", zap.Int("port", config.GetConfig().GetInt("server.port")))
+	logger.Log().Info("Server starting on port")
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Log().Error("Failed to start aPI server", zap.Error(err))
+			logger.Log().Error("Failed to start API server", zap.Error(err))
 		}
 	}()
 }

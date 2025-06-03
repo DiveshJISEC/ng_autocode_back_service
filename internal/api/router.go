@@ -42,11 +42,11 @@ func SetupRoutes(moduleGrp moduleGrp.ModuleLayer, logger *zap.Logger, appType cm
 			list.GET("/agent", moduleGrp.GetFDAgentList)
 			//list.GET("/agent/:id", moduleGrp.GetFDAgentById)
 		}
-		// book := v1.Group("/book")
-		// {
-		// 	book.GET("/order", moduleGrp.GetOrderBook)
-		// 	//book.GET("/order/:id", moduleGrp.GetOrderBookById)
-		// }
+		book := v1.Group("/book")
+		{
+			book.GET("/orderbook", moduleGrp.GetFDOrderBook)
+			//book.GET("/order/:id", moduleGrp.GetOrderBookById)
+		}
 		// misc := v1.Group("/misc")
 		// {
 		// 	book.GET("/TransactionCount", moduleGrp.GetTransactionCount)

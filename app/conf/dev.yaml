@@ -11,30 +11,29 @@ server:
   max_header_bytes: 1048576
   max_body_bytes: 1048576
   max_header_count: 100
-  max_body_count: 100
-  
+  max_body_count: 100  
 repo:
   databases:
     oracle:
       read:
         ebatest:
-          user: ebatest
-          password: ebatest
+          user: postgres
+          password: admin
           host: 0.0.0.0
-          port: 2227
-          db: ebatest
-          schema: ebatest
+          port: 5432
+          db: Finservice
+          schema: Finservice
       write:
         ebatest:
-          user: ebatest
-          password: ebatest
+          user: postgres
+          password: admin
           host: 0.0.0.0
-          port: 2227
-          db: ebatest
-          schema: ebatest
+          port: 5432
+          db: Finservice
+          schema: Finservice
   redis:
     host: 0.0.0.0
     port: 6389
 log:
-  path: "auto_app_dev.log"
+  path: "log\\app.log"
   level: -1

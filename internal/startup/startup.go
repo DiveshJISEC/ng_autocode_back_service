@@ -43,9 +43,9 @@ func Startup(releaseMode int8, appType cmn.APP_TYPE) error {
 	if err != nil {
 		log.Fatal("Error converting log level:", err)
 	}
-	sLogFilePath := config.GetString("log.filepath")
+	sLogFilePath := config.GetString("log.path")
 	sLogFilePath = cmnUtils.UpdatePathSeparator(sLogFilePath)
-	cmnUtils.CreateFolders(sLogFilePath)
+	cmnUtils.CraeteFileWithPath(sLogFilePath)
 	logger.LoggerInit(sLogFilePath, logger.GetZapLevel(logLevel))
 	//#endregion
 
@@ -67,6 +67,9 @@ func Startup(releaseMode int8, appType cmn.APP_TYPE) error {
 	fmt.Println("5. Loading Api Server...")
 	api.SetAPIServer(&ctx, modulesLayer, appType, releaseMode)
 	//#endregion
+
+	sAddr := fmt.Sprintf("%s:%s", config.GetString("server.host"), config.GetString("server.port"))
+	fmt.Println("Server is starting at:", sAddr)
 
 	fmt.Println("Startup completed successfully. Server ready to serve requests.")
 	return nil
