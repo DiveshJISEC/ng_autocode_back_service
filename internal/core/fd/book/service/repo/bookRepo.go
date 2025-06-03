@@ -17,28 +17,22 @@ func (g *dbSt) GetFDOrderBook(c context.Context) (dtoResponse []*dto.FDOrderBook
 
 	// Query the database for FDorder list
 	var fdOrderBook []m.FDOrderBook
-	query := g.oracle.WithContext(c).Table("fd_trans").
-		Select(
-			`transId`,
-			`userId`,
-			`matchAccount`,
-			`fdSchemeName`,
-			`interestRate`,
-			`amount`,
-			`maturityDays`,
-			`autoRenew`,
-			`fdorderCode`,
-			`otherFlags`,
-			`dtUpdate`,
-		)
+
+	// Query the database using raw SQL to avoid quoting issues
+	query := g.oracle.WithContext(c).Raw(`
+		SELECT transId, userId, matchAccount, fdSchemeName, 
+		       interestRate, amount, maturityDays, autoRenew,
+		       fdagentCode, otherFlags, dtUpdate
+		FROM fd_trans`)
 
 	logger.Log(c).Debug("Executing query", zap.Any("query", query))
-	err := query.Scan(&fdOrderBook).Error
-	if err != nil {
+
+	if err := query.Scan(&fdOrderBook).Error; err != nil {
 		logger.Log(c).Error("Failed to execute query", zap.Error(err))
 		return nil, err
 	}
 
+	// Map the results to the response dto
 	for _, order := range fdOrderBook {
 		orderBook = append(orderBook, &dto.FDOrderBookResponse{
 			TransId:      order.TransId,
