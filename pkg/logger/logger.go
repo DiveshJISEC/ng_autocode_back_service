@@ -44,7 +44,7 @@ func LoggerInit(logFilePath string, level zapcore.Level) {
 		cfg.OutputPaths = paths
 	}
 
-	logObject, err := cfg.Build()
+	logObject, err = cfg.Build()
 	if err != nil {
 		fmt.Println("Error initializing logger:", err)
 		os.Exit(1)

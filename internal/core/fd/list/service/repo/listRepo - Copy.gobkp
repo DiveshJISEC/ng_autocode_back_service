@@ -15,17 +15,16 @@ func (g *dbSt) GetFDAgentList(c context.Context) (dtoResponse []*dto.FDAgentList
 	// Create a slice to hold the database results
 	var fdAgentList []m.FDAgent
 
-	// Query the database using raw SQL to avoid quoting issues
-	query := g.oracle.WithContext(c).Raw(`
-		SELECT agentCode, agentCodeName, agentFirstName, agentLastName,
-		       agentBranch, agentCategory, agentActive, agentEmpType,
-		       otherFlags, dtUpdate
-		FROM fd_agentMaster`)
+	// Query the database using proper GORM syntax
+	query := g.oracle.WithContext(c).
+		Table("fd_agentMaster").
+		Select("agentCode, agentCodeName, agentFirstName, agentLastName, " +
+			"agentBranch, agentCategory, agentActive, agentEmpType, otherFlags, dtUpdate")
 
 	logger.Log(c).Debug("Executing query", zap.Any("query", query))
 
 	// Execute the query
-	if err := query.Scan(&fdAgentList).Error; err != nil {
+	if err := query.Find(&fdAgentList).Error; err != nil {
 		logger.Log(c).Error("Failed to fetch FD agent list", zap.Error(err))
 		return nil, err
 	}

@@ -12,7 +12,9 @@ import (
 	cfg "ng_autocode_back_service/pkg/config"
 	logger "ng_autocode_back_service/pkg/logger"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 
 	"go.uber.org/zap"
 )
@@ -72,5 +74,17 @@ func Startup(releaseMode int8, appType cmn.APP_TYPE) error {
 	fmt.Println("Server is starting at:", sAddr)
 
 	fmt.Println("Startup completed successfully. Server ready to serve requests.")
+	addShutdownHook()
 	return nil
+}
+
+func addShutdownHook() {
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
+	<-quit
+	logger.Log().Info("Quit signal received. Shutting down server...")
+	api.ShutdownRouter()
+	//api.CloseDBConnections()
+	logger.Log().Info("Server shutdown completed.")
 }

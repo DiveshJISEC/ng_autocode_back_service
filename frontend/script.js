@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // API endpoints
     const API_ENDPOINTS = {
-        AGENT_LIST: 'http://localhost:8016/fd/v1/list/agent',
-        ORDER_BOOK: 'http://localhost:8016/fd/v1/book/orderbook',
-        HEALTH: 'http://localhost:8016/health'
+        AGENT_LIST: 'http://localhost:8086/fd/v1/list/agent',
+        ORDER_BOOK: 'http://localhost:8086/fd/v1/book/orderbook',
+        HEALTH: 'http://localhost:8086/health'
     };
 
     // Store previous results for back button
