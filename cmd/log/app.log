@@ -1,2 +1,0 @@
-Jun 3 14:25:55.124 [34mINFO[0m logger.go:64 ng_autocode_back_service/pkg/logger.LoggerInit Logger initialized successfully
-Jun 3 14:25:55.205 [34mINFO[0m server.go:27 ng_autocode_back_service/internal/api.SetAPIServer Server starting on port
