@@ -17,10 +17,14 @@ func (g *dbSt) GetFDAgentList(c context.Context, dtoRequest *dto.FDAgentListRequ
 	var fdAgentList []m.FDAgent
 
 	// Query the database using raw SQL to avoid quoting iss
-	whereQ := ""
+	whereQ := fmt.Sprintf(" where agentActive = %t", dtoRequest.AgentActive)
 	if dtoRequest.AgentBranch != "" {
-		whereQ = whereQ + fmt.Sprintf(" where agentBranch = '%s'", dtoRequest.AgentBranch)
+		whereQ = whereQ + fmt.Sprintf(" and agentBranch = '%s'", dtoRequest.AgentBranch)
 	}
+	if dtoRequest.FdAgentCode != "" {
+		whereQ = whereQ + fmt.Sprintf(" and agentCodeName = '%s'", dtoRequest.FdAgentCode)
+	}
+
 	query := g.oracle.WithContext(c).Raw(`
 		SELECT agentCode, agentCodeName, agentFirstName, agentLastName,
 		       agentBranch, agentCategory, agentActive, agentEmpType,

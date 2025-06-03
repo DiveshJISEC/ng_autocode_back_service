@@ -13,7 +13,7 @@ type dbSt struct {
 }
 
 type DataLayer interface {
-	GetFDOrderBook(context.Context) (dtoResponse []*dto.FDOrderBookResponse, e error)
+	GetFDOrderBook(c context.Context, dtoRequest *dto.FDOrderBookRequest) (dtoResponse []*dto.FDOrderBookResponse, e error)
 }
 
 func NewDataLayerOb(repo repo.DataObject) DataLayer {

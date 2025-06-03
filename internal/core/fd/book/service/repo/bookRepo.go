@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"fmt"
 	m "ng_autocode_back_service/internal/core/fd/book/service/model/db"
 	dto "ng_autocode_back_service/internal/core/fd/book/service/model/dto"
 	logger "ng_autocode_back_service/pkg/logger"
@@ -9,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func (g *dbSt) GetFDOrderBook(c context.Context) (dtoResponse []*dto.FDOrderBookResponse, e error) {
+func (g *dbSt) GetFDOrderBook(c context.Context, dtoRequest *dto.FDOrderBookRequest) (dtoResponse []*dto.FDOrderBookResponse, e error) {
 	logger.Log(c).Info("GetfdOrderBook called")
 
 	// Create a slice to hold the results
@@ -19,11 +20,18 @@ func (g *dbSt) GetFDOrderBook(c context.Context) (dtoResponse []*dto.FDOrderBook
 	var fdOrderBook []m.FDOrderBook
 
 	// Query the database using raw SQL to avoid quoting issues
+	whereQ := fmt.Sprintf(" where interestrate > %f", dtoRequest.InterestRate)
+	if dtoRequest.MatchAccount != 0 {
+		whereQ = whereQ + fmt.Sprintf(" and matchaccount = %d", dtoRequest.MatchAccount)
+	}
+	if dtoRequest.FdAgentCode != "" {
+		whereQ = whereQ + fmt.Sprintf(" and fdagentcode = '%s'", dtoRequest.FdAgentCode)
+	}
 	query := g.oracle.WithContext(c).Raw(`
 		SELECT transId, userId, matchAccount, fdSchemeName, 
 		       interestRate, amount, maturityDays, autoRenew,
 		       fdagentCode, otherFlags, dtUpdate
-		FROM fd_trans`)
+		FROM fd_trans` + whereQ)
 
 	logger.Log(c).Debug("Executing query", zap.Any("query", query))
 
