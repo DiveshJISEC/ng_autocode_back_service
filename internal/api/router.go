@@ -27,9 +27,9 @@ func SetupRoutes(moduleGrp moduleGrp.ModuleLayer, logger *zap.Logger, appType cm
 	router := gin.New()
 
 	// Set up middleware
+	router.Use(cors())
 	router.Use(customLogger(logger))
 	router.Use(gin.Recovery())
-	router.Use(cors())
 	router.GET("/health", moduleGrp.GetSystemMatrics)
 	//Sample
 	router.GET("/version", moduleGrp.GetAppVersion)

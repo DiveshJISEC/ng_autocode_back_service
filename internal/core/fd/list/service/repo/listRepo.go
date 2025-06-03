@@ -2,6 +2,7 @@ package repo
 
 import (
 	"context"
+	"fmt"
 	m "ng_autocode_back_service/internal/core/fd/list/service/model/db"
 	dto "ng_autocode_back_service/internal/core/fd/list/service/model/dto"
 	logger "ng_autocode_back_service/pkg/logger"
@@ -9,18 +10,22 @@ import (
 	"go.uber.org/zap"
 )
 
-func (g *dbSt) GetFDAgentList(c context.Context) (dtoResponse []*dto.FDAgentListResponse, e error) {
+func (g *dbSt) GetFDAgentList(c context.Context, dtoRequest *dto.FDAgentListRequest) (dtoResponse []*dto.FDAgentListResponse, e error) {
 	logger.Log(c).Info("GetFDAgentList called")
 
 	// Create a slice to hold the database results
 	var fdAgentList []m.FDAgent
 
-	// Query the database using raw SQL to avoid quoting issues
+	// Query the database using raw SQL to avoid quoting iss
+	whereQ := ""
+	if dtoRequest.AgentBranch != "" {
+		whereQ = whereQ + fmt.Sprintf(" where agentBranch = '%s'", dtoRequest.AgentBranch)
+	}
 	query := g.oracle.WithContext(c).Raw(`
 		SELECT agentCode, agentCodeName, agentFirstName, agentLastName,
 		       agentBranch, agentCategory, agentActive, agentEmpType,
 		       otherFlags, dtUpdate
-		FROM fd_agentMaster`)
+		FROM fd_agentMaster` + whereQ)
 
 	logger.Log(c).Debug("Executing query", zap.Any("query", query))
 

@@ -37,7 +37,7 @@ func NewAppModuleLayer(repo repo.DataObject) ModuleLayer {
 }
 
 func (m *module) GetSystemMatrics(c *gin.Context) {
-	c.JSON(http.StatusOK, e.SuccesssResponse("I AM HEALTHY 2025-06-03 14:00"))
+	c.JSON(http.StatusOK, e.SuccesssResponse("I AM HEALTHY 2025-06-03 16:00"))
 }
 
 func (m *module) GetAppVersion(c *gin.Context) {

@@ -25,8 +25,53 @@
             <div class="left-panel">
                 <!-- Features Section -->
                 <div class="feature-section">
+                    <!-- New Agent List Feature -->
                     <div class="feature-group">
-                        <div class="feature-header active" data-feature="health">
+                        <div class="feature-header active" data-feature="agentList">
+                            <h3>Agent List</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content show">
+                            <table class="filter-table">
+                                <tr>
+                                    <td>Query Type:</td>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="queryType" value="full" checked onchange="toggleFilters(this)"> Full
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="queryType" value="filter" onchange="toggleFilters(this)"> Filter
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Code:</td>
+                                    <td><input type="text" id="agentCode" placeholder="Enter agent code"></td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Branch:</td>
+                                    <td><input type="text" id="agentBranch" placeholder="Enter branch"></td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Active:</td>
+                                    <td>
+                                        <select id="agentActive">
+                                            <option value="true">Active</option>
+                                            <option value="false">Inactive</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button onclick="fetchAgentList()">Fetch Agents</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="health">
                             <h3>Health 2412</h3>
                             <span class="toggle-icon">▼</span>
                         </div>

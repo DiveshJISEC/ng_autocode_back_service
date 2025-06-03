@@ -13,7 +13,7 @@ type dbSt struct {
 }
 
 type DataLayer interface {
-	GetFDAgentList(context.Context) (dtoResponse []*dto.FDAgentListResponse, e error)
+	GetFDAgentList(c context.Context, dtoRequest *dto.FDAgentListRequest) (dtoResponse []*dto.FDAgentListResponse, e error)
 }
 
 func NewDataLayerOb(repo repo.DataObject) DataLayer {

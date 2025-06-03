@@ -12,7 +12,7 @@ type serviceItem struct {
 }
 
 type ServiceLayer interface {
-	GetFDAgentList(c context.Context, request *dto.FDAgentListRequest) (response []*dto.FDAgentListResponse, e error)
+	GetFDAgentList(c context.Context, dtoRequest *dto.FDAgentListRequest) (response []*dto.FDAgentListResponse, e error)
 }
 
 func NewListServicesLayerObject(repo repo.DataObject) ServiceLayer {
