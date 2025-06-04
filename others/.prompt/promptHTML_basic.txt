@@ -1,0 +1,31 @@
+Create a new html page (index) in web directory with simple light weight javascript for server calls showing "Welcome to Next gen back end server" and so on.
+"Following functionalities are available now"
+
+1. Body is divided into two parts Feature and Results
+2. Features will be at left panel  in tabular format and Resuls in rigth panel
+3. left panel 30% and right 70%
+4. each Feture in collapsable mode and default is Collapsed except first
+6. filter should be tabular format
+7. use smaller font size for filter 
+8. background image in line with fintech page with dark and light mode with some good image.
+9. output should be shown at right side in tabular format
+10. code should be readable and multi layered.
+
+Feature 1: Health 2412
+url: http://localhost:8016/health
+
+
+Feature 2: Version 1561
+url: http://localhost:8016/version
+
+
+Feature 3: Readfile 3120
+url: http://localhost:8016/readfile
+
+
+Feature 4: ReadJson 7150
+url: http://localhost:8016/readjson
+
+Feature 5: ReadExternal 5346
+https://jsonplaceholder.typicode.com/posts/1/comments
+
