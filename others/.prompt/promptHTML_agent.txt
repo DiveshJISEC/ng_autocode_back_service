@@ -1,0 +1,12 @@
+Add one more feature in webpage at top for retriving 'fd/v1/list/agent' from router.go file
+
+name: Agent List
+display filters: 
+1. radio box a. Full (default selected) b. Filter
+in case of filter followin input will be enabled other wise collapsed
+	i. agent Code => string
+	ii.  AgentBranch =>  string	
+	iii. agentActive => bool
+2. 'Fetch' button will call service as per filter values. if full is selected than default values.
+3. Show response in right panel in tabular format with refresh button at right.
+
