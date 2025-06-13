@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Gen Backend Server</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+        <em>Dark Mode</em>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Welcome to Next Gen Backend Server</h1>
+            <p>Following functionalities are available now</p>
+        </header>
+
+        <main>
+            <div class="left-panel">
+                <!-- Features Section -->
+                <div class="feature-section">
+                    <!-- New Agent List Feature -->
+                    <div class="feature-group">
+                        <div class="feature-header active" data-feature="agentList">
+                            <h3>Agent List</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content show">
+                            <table class="filter-table">
+                                <tr>
+                                    <td>Query Type:</td>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="queryType" value="full" checked onchange="toggleFilters(this)"> Full
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="queryType" value="filter" onchange="toggleFilters(this)"> Filter
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Code:</td>
+                                    <td><input type="text" id="agentCode" placeholder="Enter agent code"></td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Branch:</td>
+                                    <td><input type="text" id="agentBranch" placeholder="Enter branch"></td>
+                                </tr>
+                                <tr class="filter-inputs" style="display: none;">
+                                    <td>Agent Active:</td>
+                                    <td>
+                                        <select id="agentActive">
+                                            <option value="true">Active</option>
+                                            <option value="false">Inactive</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button onclick="fetchAgentList()">Fetch Agents</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="health">
+                            <h3>Health 2412</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content show">
+                            <table class="filter-table">
+                                <tr>
+                                    <td><button onclick="callEndpoint('health')">Check Health</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="version">
+                            <h3>Version 1561</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content">
+                            <table class="filter-table">
+                                <tr>
+                                    <td><button onclick="callEndpoint('version')">Get Version</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="readfile">
+                            <h3>Readfile 3120</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content">
+                            <table class="filter-table">
+                                <tr>
+                                    <td><button onclick="callEndpoint('readfile')">Read File</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="readjson">
+                            <h3>ReadJson 7150</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content">
+                            <table class="filter-table">
+                                <tr>
+                                    <td><button onclick="callEndpoint('readJson')">Read JSON</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="feature-group">
+                        <div class="feature-header" data-feature="readexternal">
+                            <h3>ReadExternal 5346</h3>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="feature-content">
+                            <table class="filter-table">
+                                <tr>
+                                    <td><button onclick="callEndpoint('readexternal')">Read External Data</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <!-- Results Section -->
+                <h2>Results</h2>
+                <div id="results-container">
+                    <table id="results-table">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

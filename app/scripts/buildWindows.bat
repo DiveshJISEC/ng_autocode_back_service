@@ -1,0 +1,2 @@
+start buildWinDebug
+start buildWinRelease

@@ -1,0 +1,1 @@
+start app\bin\win\debug\ngbs_fd_dbg.exe "dev"

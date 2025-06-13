@@ -1,0 +1,29 @@
+vesrion: 1.0
+server:
+  host: 0.0.0.0
+  port: 8096
+repo:
+  databases:
+    oracle:
+      read:
+        ebatest:
+          user: ebatest
+          password: ebatest
+          host: 0.0.0.0
+          port: 2227
+          db: ebatest
+          schema: ebatest
+      write:
+        ebatest:
+          user: ebatest
+          password: ebatest
+          host: 0.0.0.0
+          port: 2227
+          db: ebatest
+          schema: ebatest
+  redis:
+    host: 0.0.0.0
+    port: 6389
+log:
+  path: "auto_app_prod.log"
+  level: -1
